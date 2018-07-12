@@ -18,6 +18,7 @@ public class MainMenu {
     MainMenu(PrintStream printStream) {
         menu = new ArrayList<>();
         menu.add("1. List Books");
+        menu.add("2. Quit");
         this.printStream = printStream;
     }
 
@@ -29,6 +30,11 @@ public class MainMenu {
     void choose(int number) {
         if (number > menu.size()) {
             printStream.print(INVALID_OPTION);
+        }
+        if (number == 1) {
+            printStream.print(new BookList());
+        } else if (number == 2) {
+            System.exit(0);
         }
     }
 
