@@ -10,7 +10,7 @@ public class BookTest {
     private String author;
     private int yearPublished;
     private Book book;
-
+    private String expectedDetails;
 
     @Before
     public void setUp() {
@@ -18,6 +18,12 @@ public class BookTest {
         author = "Kent Beck";
         yearPublished = 2003;
         book = new Book(title, author, yearPublished);
+        expectedDetails = String.format("%-15s %-15s %-30s %n", title, author, yearPublished);
+    }
+
+    @Test
+    public void shouldGetBookDetails() {
+        assertEquals(expectedDetails, book.getDetails());
     }
 
 }
