@@ -17,6 +17,7 @@ public class BookListTest {
 
     @Before
     public void setUp()  {
+        bookList = new BookList();
         bookList.init();
         expectedList = String.format("%-15s %-15s %-30s %n", "Test-driven Development: By Example", "Kent Beck", 2003);
     }
