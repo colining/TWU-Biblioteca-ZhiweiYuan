@@ -1,23 +1,30 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BookList {
-    private List<Book> bookList;
-
+    private Map<String, Book> bookList;
+    private Map<String, Book> checkoutList;
     BookList() {
-        bookList = new ArrayList<>();
+        bookList = new HashMap<>();
+        checkoutList = new HashMap<>();
     }
 
 
     void init() {
-        bookList.add(new Book("Test-driven Development: By Example", "Kent Beck", 2003));
+        bookList.put("Test-driven Development: By Example", new Book("Test-driven Development: By Example", "Kent Beck", 2003));
     }
 
     @Override
     public String toString() {
-        return bookList.stream().map(Book::getDetails).collect(Collectors.joining("\n"));
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Book> entry : bookList.entrySet()) {
+            sb.append(entry.getValue().getDetails());
+        }
+        return sb.toString();
     }
 }
