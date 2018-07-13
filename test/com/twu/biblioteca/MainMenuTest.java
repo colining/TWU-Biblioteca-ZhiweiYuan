@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -14,25 +15,25 @@ public class MainMenuTest {
     private MainMenu mainMenu;
     private String expectedMenu;
     private String expectedInvalidOption;
-    private PrintStream printStream;
 
     @Test
     public void testShowMenu() {
-        mainMenu = new MainMenu(System.out);
+        mainMenu = new MainMenu(new ChoiceController(new BibliotecaApp()));
         assertEquals(expectedMenu, mainMenu.toString());
     }
 
     @Test
     public void testInvalidOption() {
-        printStream = mock(PrintStream.class);
-        MainMenu mainMenu2 = new MainMenu(printStream);
-        mainMenu2.choose(2);
+        BibliotecaApp app = new BibliotecaApp();
+        PrintStream printStream = mock(PrintStream.class);
+        app.printer = printStream;
+        app.mainMenu.choose(100);
         verify(printStream).print(expectedInvalidOption);
     }
 
     @Before
     public void setUp() {
-        expectedMenu = "1. List Books";
+        expectedMenu = "1. List Books\n2. Quit\n";
         expectedInvalidOption = "Select a valid option!";
     }
 }

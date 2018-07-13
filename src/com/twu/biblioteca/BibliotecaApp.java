@@ -6,34 +6,38 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class BibliotecaApp {
-    private PrintStream printStream;
+    PrintStream printer;
     private Scanner input;
     private Welcome welcome;
-    private BookList bookList;
-    private MainMenu mainMenu;
+    BookList bookList;
+    MainMenu mainMenu;
+    private ChoiceController choiceController;
 
-    public BibliotecaApp(PrintStream printStream, Scanner input, Welcome welcome, BookList bookList, MainMenu mainMenu) {
-        this.printStream = printStream;
+    public BibliotecaApp(PrintStream printStream, Scanner input, Welcome welcome, BookList bookList, MainMenu mainMenu, ChoiceController choiceController) {
+        this.printer = printStream;
         this.input = input;
         this.welcome = welcome;
         this.bookList = bookList;
         this.mainMenu = mainMenu;
+        this.choiceController = choiceController;
     }
 
     BibliotecaApp() {
-        this.printStream = System.out;
+        this.printer = System.out;
         this.input = new Scanner(System.in);
-        this.welcome = new Welcome(this.printStream);
+        this.welcome = new Welcome(this.printer);
         this.bookList = new BookList();
         this.bookList.init();
-        this.mainMenu = new MainMenu(this.printStream);
-
+        this.choiceController = new ChoiceController(this);
+        this.mainMenu = new MainMenu(choiceController);
     }
 
     public static void main(String[] args) {
         BibliotecaApp app = new BibliotecaApp();
         app.welcome.welcome();
-        app.printStream.print(app.mainMenu);
-
+        app.printer.print(app.mainMenu);
+        int num = app.input.nextInt();
+        app.mainMenu.choose(num);
     }
+
 }
